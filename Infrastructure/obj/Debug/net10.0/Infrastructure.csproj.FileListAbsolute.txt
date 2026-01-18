@@ -17,3 +17,4 @@ C:\Users\nguyendev\Documents\GitHub\dot-net-api-clean-architecture\Infrastructur
 C:\Users\nguyendev\Documents\GitHub\dot-net-api-clean-architecture\Infrastructure\obj\Debug\net10.0\Infrastructure.pdb
 C:\Users\nguyendev\Documents\GitHub\dot-net-api-clean-architecture\Infrastructure\obj\Debug\net10.0\Infrastructure.genruntimeconfig.cache
 C:\Users\nguyendev\Documents\GitHub\dot-net-api-clean-architecture\Infrastructure\obj\Debug\net10.0\ref\Infrastructure.dll
+C:\Users\nguyendev\Documents\GitHub\dot-net-api-clean-architecture\Infrastructure\obj\Debug\net10.0\Infrastructure.sourcelink.json
