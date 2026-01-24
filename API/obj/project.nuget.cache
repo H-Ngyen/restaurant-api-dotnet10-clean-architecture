@@ -1,9 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "Ulw9QEkQk24=",
+  "dgSpecHash": "j9vA8LYcuh0=",
   "success": true,
   "projectFilePath": "C:\\Users\\nguyendev\\Documents\\GitHub\\dot-net-api-clean-architecture\\API\\API.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\nguyendev\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\nguyendev\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
     "C:\\Users\\nguyendev\\.nuget\\packages\\azure.core\\1.47.1\\azure.core.1.47.1.nupkg.sha512",
     "C:\\Users\\nguyendev\\.nuget\\packages\\azure.identity\\1.14.2\\azure.identity.1.14.2.nupkg.sha512",
     "C:\\Users\\nguyendev\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
