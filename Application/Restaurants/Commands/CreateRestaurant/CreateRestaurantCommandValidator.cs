@@ -1,12 +1,12 @@
-using Application.Restaurants.Dtos;
+using Application.Restaurants.Commands.CreateRestaurant;
 using FluentValidation;
 
 namespace Application.Restaurants.Validators;
 
-public class CreateRestaurantDtoValidator : AbstractValidator<CreateRestaurantDto>
+public class CreateRestaurantCommandValidator : AbstractValidator<CreateRestaurantCommand>
 {
     private readonly List<string> validCategory = ["Italia", "Mexico", "Japanese", "American", "Indian"];
-    public CreateRestaurantDtoValidator()
+    public CreateRestaurantCommandValidator()
     {
         RuleFor(dto => dto.Name)
             .Length(3, 100);
@@ -23,7 +23,7 @@ public class CreateRestaurantDtoValidator : AbstractValidator<CreateRestaurantDt
             .WithMessage("Please provide a valid email address");
 
         RuleFor(dto => dto.PostalCode)
-            .Matches(@"^\d{2}-\d\d{3}")
+            .Matches(@"^\d{2}-\d{3}")
             .WithMessage("Please provide a valid postal code (XX-XXX).");
     }
 }
