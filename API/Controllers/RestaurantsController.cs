@@ -1,8 +1,6 @@
-using Application.Restaurants;
 using Application.Restaurants.Commands.CreateRestaurant;
 using Application.Restaurants.Commands.DeleteRestaurant;
 using Application.Restaurants.Commands.UpdateRestaurant;
-using Application.Restaurants.Dtos;
 using Application.Restaurants.Queries.GetAllRestaurants;
 using Application.Restaurants.Queries.GetRestaurantById;
 using MediatR;
