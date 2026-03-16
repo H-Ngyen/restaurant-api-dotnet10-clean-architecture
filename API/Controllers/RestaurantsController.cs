@@ -17,7 +17,7 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RestaurantDto>))]
     public async Task<IActionResult> GetAll()
     {
-        Thread.Sleep(4000);
+        // Thread.Sleep(4000);
         var restaurants = await mediator.Send(new GetAllRestaurantsQuery());
         return Ok(restaurants);
     }
