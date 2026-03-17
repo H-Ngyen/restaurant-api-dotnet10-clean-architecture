@@ -1,3 +1,4 @@
+using Domain.Entities;
 using Domain.Repositories;
 using Infrastructure.Persistence;
 using Infrastructure.Repositories;
@@ -14,6 +15,9 @@ public static class ServiceCollectionExtensions
     {
         var ConnectionString = config.GetConnectionString("RestaurantsDb");
         services.AddDbContext<RestaurantsDbContext>(options => options.UseSqlServer(ConnectionString));
+
+        services.AddIdentityApiEndpoints<User>()
+            .AddEntityFrameworkStores<RestaurantsDbContext>();
 
         services.AddScoped<IRestaurantSeeder, RestaurantSeeder>();
         services.AddScoped<IRestaurantsRepository, RestaurantsRepository>();

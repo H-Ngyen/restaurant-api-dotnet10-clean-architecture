@@ -4,6 +4,7 @@ using Infrastructure.Seeders;
 using Serilog;
 using API.Extensions;
 using API.Middlewares;
+using Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +12,7 @@ var builder = WebApplication.CreateBuilder(args);
 var config = builder.Configuration;
 
 builder.AddPresentation();
-builder.Services.AddSwaggerGen();
 
-builder.Services.AddControllers();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(config);
 
@@ -38,6 +37,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.MapGroup("api/identity")
+    .WithTags("Identity")
+    .MapIdentityApi<User>();
 
 app.UseHttpsRedirection();
 
