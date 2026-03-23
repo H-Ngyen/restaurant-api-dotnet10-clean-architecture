@@ -4,6 +4,8 @@ using Application.Restaurants.Commands.UpdateRestaurant;
 using Application.Restaurants.Dtos;
 using Application.Restaurants.Queries.GetAllRestaurants;
 using Application.Restaurants.Queries.GetRestaurantById;
+using Domain.Constraints;
+using Infrastructure.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,9 +18,10 @@ namespace API.Controllers;
 public class RestaurantsController(IMediator mediator) : ControllerBase
 {
     [HttpGet]
-    [AllowAnonymous]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<RestaurantDto>))]
-    public async Task<IActionResult> GetAll()
+    // [AllowAnonymous]
+    [Authorize(Policy = PolicyNames.CreatedAtleast2Restaurants)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetAll()
     {
         // Thread.Sleep(4000);
         var restaurants = await mediator.Send(new GetAllRestaurantsQuery());
@@ -26,7 +29,9 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{id:int}")]
+    [Authorize(Policy = PolicyNames.HasNationality)]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<RestaurantDto>>> GetRestaurant([FromRoute] int id) 
     {
@@ -35,7 +40,12 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateRestaurant(CreateRestaurantCommand createRestaurantCommand)
+    [Authorize(Roles = UserRoles.Owner)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    public async Task<ActionResult> CreateRestaurant(CreateRestaurantCommand createRestaurantCommand)
     {
         var id = await mediator.Send(createRestaurantCommand);
         return CreatedAtAction(nameof(GetRestaurant), new { id }, null);
@@ -43,8 +53,9 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
     
     [HttpDelete("{id:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> DeleteRestaurant(int id) 
+    public async Task<ActionResult> DeleteRestaurant(int id) 
     {
         await mediator.Send(new DeleteRestaurantCommand(id));
         return NoContent();
@@ -52,8 +63,9 @@ public class RestaurantsController(IMediator mediator) : ControllerBase
 
     [HttpPatch("{id:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> UpdateRestaurant(int id, UpdateRestaurantCommand command)
+    public async Task<ActionResult> UpdateRestaurant(int id, UpdateRestaurantCommand command)
     {
         command.Id = id;
         await mediator.Send(command);

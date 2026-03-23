@@ -4,6 +4,7 @@ using Application.Dishes.Commands.DeleteById;
 using Application.Dishes.Dtos;
 using Application.Dishes.Queries.GetAllDishForRestaurant;
 using Application.Dishes.Queries.GetDishById;
+using Infrastructure.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -18,6 +19,7 @@ public class DishesController(IMediator mediator) : ControllerBase
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<ActionResult<int>> CreateDish([FromRoute] int restaurantId, [FromBody] CreateDishCommand command)
     {
         command.RestaurantId = restaurantId;
@@ -26,7 +28,9 @@ public class DishesController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Policy = PolicyNames.AtLeast20)]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<IEnumerable<DishDto>>> GetAllDishForRestaurant([FromRoute] int restaurantId)
     {
@@ -36,6 +40,7 @@ public class DishesController(IMediator mediator) : ControllerBase
 
     [HttpGet("{dishId:int}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<DishDto>> GetDishById([FromRoute] int restaurantId, [FromRoute] int dishId)
     {
@@ -45,6 +50,7 @@ public class DishesController(IMediator mediator) : ControllerBase
 
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     // [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> DeleteAllDishForRestaurant([FromRoute] int restaurantId)
@@ -55,6 +61,7 @@ public class DishesController(IMediator mediator) : ControllerBase
 
     [HttpDelete("{dishId:int}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     // [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> DeleteDishById([FromRoute] int restaurantId, [FromRoute] int dishId)

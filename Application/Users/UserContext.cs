@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
 namespace Application.Users
@@ -26,8 +22,13 @@ namespace Application.Users
             var userId = user.FindFirst(ctx => ctx.Type == ClaimTypes.NameIdentifier)!.Value;
             var email = user.FindFirst(ctx => ctx.Type == ClaimTypes.Email)!.Value;
             var roles = user.Claims.Where(ctx => ctx.Type == ClaimTypes.Role)!.Select(ctx => ctx.Value);
-
-            return new CurrentUser(userId, email, roles);
+            var nationality = user.FindFirst(ctx => ctx.Type == "Nationality")?.Value;
+            var dateOfBirthString = user.FindFirst(ctx => ctx.Type == "DateOfBirth")?.Value;
+            var dateOfBirth = dateOfBirthString == null 
+                ? (DateOnly?)null
+                : DateOnly.ParseExact(dateOfBirthString, "yyyy-MM-dd");
+            
+            return new CurrentUser(userId, email, roles, nationality, dateOfBirth);
         }
     }
 }

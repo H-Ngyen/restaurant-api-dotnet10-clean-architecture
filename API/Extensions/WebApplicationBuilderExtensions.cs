@@ -1,3 +1,4 @@
+using API.Helpers;
 using API.Middlewares;
 using Microsoft.OpenApi.Models;
 using Serilog;
@@ -28,6 +29,8 @@ public static class WebApplicationBuilderExtensions
                     []
                 }
             });
+
+            cfg.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
         });
 
         builder.Services.AddEndpointsApiExplorer();
