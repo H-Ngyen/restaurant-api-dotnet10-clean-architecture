@@ -19,7 +19,7 @@ public class CreateDishCommandHandler(ILogger<CreateDishCommandHandler> logger,
     {
         logger.LogInformation("Creating new dish {@DishRequest}", request);
         var restaurant = await restaurantsRepository.GetByIdAsync(request.RestaurantId)
-            ?? throw new NotFoundException(nameof(Restaurant), request.RestaurantId.ToString());
+            ?? throw new NotFoundException(nameof(Restaurant), $"{request.RestaurantId}");
         
         if(!restaurantAuthorizationService.Authorize(restaurant, ResourceOperation.Update))
             throw new ForbidException();
