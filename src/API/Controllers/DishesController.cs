@@ -4,7 +4,7 @@ using Application.Dishes.Commands.DeleteById;
 using Application.Dishes.Dtos;
 using Application.Dishes.Queries.GetAllDishForRestaurant;
 using Application.Dishes.Queries.GetDishById;
-using Infrastructure.Authorization;
+using Domain.Constraints;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
