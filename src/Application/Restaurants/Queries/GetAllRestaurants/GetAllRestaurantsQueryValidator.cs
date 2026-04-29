@@ -22,7 +22,7 @@ public class GetAllRestaurantsQueryValidator : AbstractValidator<GetAllRestauran
 
         RuleFor(dto => dto.SortBy)
             .Must(value => allowSortByColumnNames.Contains(value))
-            .When(value => value != null)
+            .When(q => q.SortBy != null)
             .WithMessage($"Sort by is optional, or must be in [{string.Join(", ", allowSortByColumnNames)}]");
     }
 }

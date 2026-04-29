@@ -5,24 +5,24 @@
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateDishesKiloCaloriesNullable : Migration
+    public partial class UpdateLogoUrlForRestaurant : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "KiloCalogies",
-                table: "Dishes",
-                newName: "KiloCalories");
+            migrationBuilder.AddColumn<string>(
+                name: "LogoUrl",
+                table: "Restaurants",
+                type: "text",
+                nullable: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "KiloCalories",
-                table: "Dishes",
-                newName: "KiloCalogies");
+            migrationBuilder.DropColumn(
+                name: "LogoUrl",
+                table: "Restaurants");
         }
     }
 }

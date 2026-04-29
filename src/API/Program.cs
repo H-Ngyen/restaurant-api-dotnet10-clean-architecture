@@ -8,6 +8,8 @@ using Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.LoadEnv();
+
 // Add services to the container.
 var config = builder.Configuration;
 
@@ -32,11 +34,14 @@ app.UseMiddleware<RequestTimeLoggingMiddleware>();
 
 app.UseSerilogRequestLogging();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+// if (app.Environment.IsDevelopment())
+// {
+//     app.UseSwagger();
+//     app.UseSwaggerUI();
+// }
+
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.MapGroup("api/identity")
     .WithTags("Identity")
@@ -49,3 +54,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+public partial class Program { }
